@@ -1028,6 +1028,47 @@ export type GetEthDefaultTokenRiskRequestReptCurrEnum = typeof GetEthDefaultToke
 /**
  * 
  * @export
+ * @interface GetEthEnsLookupRequest
+ */
+export interface GetEthEnsLookupRequest {
+    /**
+     * The pagination cursor.
+     * @type {number}
+     * @memberof GetEthEnsLookupRequest
+     */
+    'page'?: number;
+    /**
+     * The number of records returned per page.
+     * @type {number}
+     * @memberof GetEthEnsLookupRequest
+     */
+    'page_size'?: GetEthEnsLookupRequestPageSizeEnum;
+    /**
+     * The wallet address to query.
+     * @type {string}
+     * @memberof GetEthEnsLookupRequest
+     */
+    'wallet_address'?: string;
+    /**
+     * The name to query.
+     * @type {string}
+     * @memberof GetEthEnsLookupRequest
+     */
+    'name'?: string;
+}
+
+export const GetEthEnsLookupRequestPageSizeEnum = {
+    NUMBER_50: 50,
+    NUMBER_100: 100,
+    NUMBER_500: 500,
+    NUMBER_1000: 1000
+} as const;
+
+export type GetEthEnsLookupRequestPageSizeEnum = typeof GetEthEnsLookupRequestPageSizeEnum[keyof typeof GetEthEnsLookupRequestPageSizeEnum];
+
+/**
+ * 
+ * @export
  * @interface GetEthHistoricalEventsRequest
  */
 export interface GetEthHistoricalEventsRequest {
@@ -4732,6 +4773,43 @@ export const EthereumApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Returns Ethereum Name Service data for a given wallet address
+         * @summary ENS Lookup
+         * @param {GetEthEnsLookupRequest} [getEthEnsLookupRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEthEnsLookup: async (getEthEnsLookupRequest?: GetEthEnsLookupRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/data/eth/getEnsLookup`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication api_key required
+            await setApiKeyToObject(localVarHeaderParameter, "x-api-key", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(getEthEnsLookupRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns marketplace activity for a given collection
          * @summary Marketplace Activity by Collection
          * @param {GetEthHistoricalEventsRequest} [getEthHistoricalEventsRequest] 
@@ -5514,6 +5592,17 @@ export const EthereumApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Returns Ethereum Name Service data for a given wallet address
+         * @summary ENS Lookup
+         * @param {GetEthEnsLookupRequest} [getEthEnsLookupRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEthEnsLookup(getEthEnsLookupRequest?: GetEthEnsLookupRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEthEnsLookup(getEthEnsLookupRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Returns marketplace activity for a given collection
          * @summary Marketplace Activity by Collection
          * @param {GetEthHistoricalEventsRequest} [getEthHistoricalEventsRequest] 
@@ -5839,6 +5928,16 @@ export const EthereumApiFactory = function (configuration?: Configuration, baseP
          */
         getEthDefaultTokenRisk(getEthDefaultTokenRiskRequest?: GetEthDefaultTokenRiskRequest, options?: any): AxiosPromise<void> {
             return localVarFp.getEthDefaultTokenRisk(getEthDefaultTokenRiskRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns Ethereum Name Service data for a given wallet address
+         * @summary ENS Lookup
+         * @param {GetEthEnsLookupRequest} [getEthEnsLookupRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEthEnsLookup(getEthEnsLookupRequest?: GetEthEnsLookupRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.getEthEnsLookup(getEthEnsLookupRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns marketplace activity for a given collection
@@ -6174,6 +6273,18 @@ export class EthereumApi extends BaseAPI {
      */
     public getEthDefaultTokenRisk(getEthDefaultTokenRiskRequest?: GetEthDefaultTokenRiskRequest, options?: AxiosRequestConfig) {
         return EthereumApiFp(this.configuration).getEthDefaultTokenRisk(getEthDefaultTokenRiskRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns Ethereum Name Service data for a given wallet address
+     * @summary ENS Lookup
+     * @param {GetEthEnsLookupRequest} [getEthEnsLookupRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthereumApi
+     */
+    public getEthEnsLookup(getEthEnsLookupRequest?: GetEthEnsLookupRequest, options?: AxiosRequestConfig) {
+        return EthereumApiFp(this.configuration).getEthEnsLookup(getEthEnsLookupRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
