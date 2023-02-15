@@ -224,7 +224,13 @@ export interface GetEthCollectionListingsOHLCRequest {
      */
     'collection_address': string;
     /**
-     * The interval at which to return OHLC, e.g. `1D` for daily, `1M` for monthly etc.
+     * If `true`, report only historical floor prices. Otherwise, report OHFC candlesticks, number of active listings, number of unique owners and the average age of open listings.
+     * @type {boolean}
+     * @memberof GetEthCollectionListingsOHLCRequest
+     */
+    'floor_only'?: boolean;
+    /**
+     * The interval at which to return Floor prices / OHLF, e.g. `1D` for daily, `1M` for monthly etc. Must be >= `6H`
      * @type {string}
      * @memberof GetEthCollectionListingsOHLCRequest
      */
@@ -235,18 +241,6 @@ export interface GetEthCollectionListingsOHLCRequest {
      * @memberof GetEthCollectionListingsOHLCRequest
      */
     'rept_curr'?: GetEthCollectionListingsOHLCRequestReptCurrEnum;
-    /**
-     * The ISO 8601 date/datetime of the oldest listing to pull for calculations
-     * @type {string}
-     * @memberof GetEthCollectionListingsOHLCRequest
-     */
-    'listing_start_date'?: string;
-    /**
-     * The ISO 8601 date/datetime of the most recent listing to pull for calculations
-     * @type {string}
-     * @memberof GetEthCollectionListingsOHLCRequest
-     */
-    'listing_end_date'?: string;
     /**
      * The ISO 8601 start date/datetime to return results for
      * @type {string}
@@ -4366,8 +4360,8 @@ export const EthereumApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns open, high, low, close candlesticks for collection listings at marketplaces at a selected time interval, as well as the number of active listings and the number of unique owners
-         * @summary Collection Price Listings Candlesticks
+         * Returns historical floor price or more extensive open / high / floor / close candlesticks for collection listings at marketplaces at a selected time interval, as well as the number of active listings, the number of unique owners and the average age of open listings
+         * @summary Collection Floor Price and Listings Candlesticks
          * @param {GetEthCollectionListingsOHLCRequest} [getEthCollectionListingsOHLCRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5471,8 +5465,8 @@ export const EthereumApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Returns open, high, low, close candlesticks for collection listings at marketplaces at a selected time interval, as well as the number of active listings and the number of unique owners
-         * @summary Collection Price Listings Candlesticks
+         * Returns historical floor price or more extensive open / high / floor / close candlesticks for collection listings at marketplaces at a selected time interval, as well as the number of active listings, the number of unique owners and the average age of open listings
+         * @summary Collection Floor Price and Listings Candlesticks
          * @param {GetEthCollectionListingsOHLCRequest} [getEthCollectionListingsOHLCRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5820,8 +5814,8 @@ export const EthereumApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getEthCollectionForecasts(getEthCollectionForecastsRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns open, high, low, close candlesticks for collection listings at marketplaces at a selected time interval, as well as the number of active listings and the number of unique owners
-         * @summary Collection Price Listings Candlesticks
+         * Returns historical floor price or more extensive open / high / floor / close candlesticks for collection listings at marketplaces at a selected time interval, as well as the number of active listings, the number of unique owners and the average age of open listings
+         * @summary Collection Floor Price and Listings Candlesticks
          * @param {GetEthCollectionListingsOHLCRequest} [getEthCollectionListingsOHLCRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -6144,8 +6138,8 @@ export class EthereumApi extends BaseAPI {
     }
 
     /**
-     * Returns open, high, low, close candlesticks for collection listings at marketplaces at a selected time interval, as well as the number of active listings and the number of unique owners
-     * @summary Collection Price Listings Candlesticks
+     * Returns historical floor price or more extensive open / high / floor / close candlesticks for collection listings at marketplaces at a selected time interval, as well as the number of active listings, the number of unique owners and the average age of open listings
+     * @summary Collection Floor Price and Listings Candlesticks
      * @param {GetEthCollectionListingsOHLCRequest} [getEthCollectionListingsOHLCRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
