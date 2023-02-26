@@ -1217,6 +1217,12 @@ export interface GetEthMarketplaceDataRequest {
      * @memberof GetEthMarketplaceDataRequest
      */
     'sub_collection_tags'?: Array<string>;
+    /**
+     * Return normalized data across marketplaces
+     * @type {boolean}
+     * @memberof GetEthMarketplaceDataRequest
+     */
+    'normalized'?: boolean;
 }
 /**
  * 
@@ -5359,6 +5365,43 @@ export const EthereumApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Returns valuation of all tokens owned for a given wallet
+         * @summary Value All Tokens Owned by Wallet
+         * @param {GetPolWalletNFTsRequest} [getPolWalletNFTsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEthWalletValuation: async (getPolWalletNFTsRequest?: GetPolWalletNFTsRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/insights/eth/getWalletValuation`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication api_key required
+            await setApiKeyToObject(localVarHeaderParameter, "x-api-key", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(getPolWalletNFTsRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns suspected wash trades for a given transaction hash
          * @summary Wash Trades by Transaction
          * @param {GetEthWashTradeRequest} [getEthWashTradeRequest] 
@@ -5762,6 +5805,17 @@ export const EthereumApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Returns valuation of all tokens owned for a given wallet
+         * @summary Value All Tokens Owned by Wallet
+         * @param {GetPolWalletNFTsRequest} [getPolWalletNFTsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEthWalletValuation(getPolWalletNFTsRequest?: GetPolWalletNFTsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEthWalletValuation(getPolWalletNFTsRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Returns suspected wash trades for a given transaction hash
          * @summary Wash Trades by Transaction
          * @param {GetEthWashTradeRequest} [getEthWashTradeRequest] 
@@ -6082,6 +6136,16 @@ export const EthereumApiFactory = function (configuration?: Configuration, baseP
          */
         getEthWalletTransactions(getEthWalletTransactionsRequest?: GetEthWalletTransactionsRequest, options?: any): AxiosPromise<void> {
             return localVarFp.getEthWalletTransactions(getEthWalletTransactionsRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns valuation of all tokens owned for a given wallet
+         * @summary Value All Tokens Owned by Wallet
+         * @param {GetPolWalletNFTsRequest} [getPolWalletNFTsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEthWalletValuation(getPolWalletNFTsRequest?: GetPolWalletNFTsRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.getEthWalletValuation(getPolWalletNFTsRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns suspected wash trades for a given transaction hash
@@ -6459,6 +6523,18 @@ export class EthereumApi extends BaseAPI {
      */
     public getEthWalletTransactions(getEthWalletTransactionsRequest?: GetEthWalletTransactionsRequest, options?: AxiosRequestConfig) {
         return EthereumApiFp(this.configuration).getEthWalletTransactions(getEthWalletTransactionsRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns valuation of all tokens owned for a given wallet
+     * @summary Value All Tokens Owned by Wallet
+     * @param {GetPolWalletNFTsRequest} [getPolWalletNFTsRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthereumApi
+     */
+    public getEthWalletValuation(getPolWalletNFTsRequest?: GetPolWalletNFTsRequest, options?: AxiosRequestConfig) {
+        return EthereumApiFp(this.configuration).getEthWalletValuation(getPolWalletNFTsRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
