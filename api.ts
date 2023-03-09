@@ -1202,6 +1202,19 @@ export type GetEthLeaderBoardRequestRankingMetricEnum = typeof GetEthLeaderBoard
 /**
  * 
  * @export
+ * @interface GetEthLiveListingsRequest
+ */
+export interface GetEthLiveListingsRequest {
+    /**
+     * The contract address of a collection.
+     * @type {string}
+     * @memberof GetEthLiveListingsRequest
+     */
+    'collection_address': string;
+}
+/**
+ * 
+ * @export
  * @interface GetEthMarketplaceDataRequest
  */
 export interface GetEthMarketplaceDataRequest {
@@ -4921,6 +4934,80 @@ export const EthereumApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Returns live listings for a collection
+         * @summary Collection live listings
+         * @param {GetEthLiveListingsRequest} [getEthLiveListingsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEthLiveListings: async (getEthLiveListingsRequest?: GetEthLiveListingsRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/data/eth/getLiveListings`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication api_key required
+            await setApiKeyToObject(localVarHeaderParameter, "x-api-key", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(getEthLiveListingsRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns live offers for a collection
+         * @summary Collection live offers
+         * @param {GetEthLiveListingsRequest} [getEthLiveListingsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEthLiveOffers: async (getEthLiveListingsRequest?: GetEthLiveListingsRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/data/eth/getLiveOffers`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication api_key required
+            await setApiKeyToObject(localVarHeaderParameter, "x-api-key", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(getEthLiveListingsRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns summary statistics for a collection by marketplace
          * @summary Collection Summary by Marketplace
          * @param {GetEthMarketplaceDataRequest} [getEthMarketplaceDataRequest] 
@@ -5673,6 +5760,28 @@ export const EthereumApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Returns live listings for a collection
+         * @summary Collection live listings
+         * @param {GetEthLiveListingsRequest} [getEthLiveListingsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEthLiveListings(getEthLiveListingsRequest?: GetEthLiveListingsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEthLiveListings(getEthLiveListingsRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Returns live offers for a collection
+         * @summary Collection live offers
+         * @param {GetEthLiveListingsRequest} [getEthLiveListingsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEthLiveOffers(getEthLiveListingsRequest?: GetEthLiveListingsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEthLiveOffers(getEthLiveListingsRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Returns summary statistics for a collection by marketplace
          * @summary Collection Summary by Marketplace
          * @param {GetEthMarketplaceDataRequest} [getEthMarketplaceDataRequest] 
@@ -6016,6 +6125,26 @@ export const EthereumApiFactory = function (configuration?: Configuration, baseP
          */
         getEthLeaderBoard(getEthLeaderBoardRequest?: GetEthLeaderBoardRequest, options?: any): AxiosPromise<void> {
             return localVarFp.getEthLeaderBoard(getEthLeaderBoardRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns live listings for a collection
+         * @summary Collection live listings
+         * @param {GetEthLiveListingsRequest} [getEthLiveListingsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEthLiveListings(getEthLiveListingsRequest?: GetEthLiveListingsRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.getEthLiveListings(getEthLiveListingsRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns live offers for a collection
+         * @summary Collection live offers
+         * @param {GetEthLiveListingsRequest} [getEthLiveListingsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEthLiveOffers(getEthLiveListingsRequest?: GetEthLiveListingsRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.getEthLiveOffers(getEthLiveListingsRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns summary statistics for a collection by marketplace
@@ -6379,6 +6508,30 @@ export class EthereumApi extends BaseAPI {
      */
     public getEthLeaderBoard(getEthLeaderBoardRequest?: GetEthLeaderBoardRequest, options?: AxiosRequestConfig) {
         return EthereumApiFp(this.configuration).getEthLeaderBoard(getEthLeaderBoardRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns live listings for a collection
+     * @summary Collection live listings
+     * @param {GetEthLiveListingsRequest} [getEthLiveListingsRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthereumApi
+     */
+    public getEthLiveListings(getEthLiveListingsRequest?: GetEthLiveListingsRequest, options?: AxiosRequestConfig) {
+        return EthereumApiFp(this.configuration).getEthLiveListings(getEthLiveListingsRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns live offers for a collection
+     * @summary Collection live offers
+     * @param {GetEthLiveListingsRequest} [getEthLiveListingsRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthereumApi
+     */
+    public getEthLiveOffers(getEthLiveListingsRequest?: GetEthLiveListingsRequest, options?: AxiosRequestConfig) {
+        return EthereumApiFp(this.configuration).getEthLiveOffers(getEthLiveListingsRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
