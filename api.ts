@@ -1091,6 +1091,12 @@ export interface GetEthHistoricalEventsRequest {
      */
     'page_size'?: GetEthHistoricalEventsRequestPageSizeEnum;
     /**
+     * Only return events occuring after this day [YYYY-MM-DD]
+     * @type {string}
+     * @memberof GetEthHistoricalEventsRequest
+     */
+    'event_date'?: string;
+    /**
      * The type of event: list, transfer, offer, mint, sale, cancel_list or cancel_offer
      * @type {string}
      * @memberof GetEthHistoricalEventsRequest
@@ -1683,7 +1689,7 @@ export interface GetEthWalletTransactionsRequest {
      * @type {string}
      * @memberof GetEthWalletTransactionsRequest
      */
-    'wallet_address'?: string;
+    'wallet_address': string;
     /**
      * The pagination cursor.
      * @type {number}
